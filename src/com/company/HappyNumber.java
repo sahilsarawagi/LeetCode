@@ -3,7 +3,7 @@ package com.company;
 public class HappyNumber {
     public static void main(String[] args) {
 
-        System.out.println(isHappy(9));
+        System.out.println(isHappy(2));
     }
 
     static boolean isHappy(int n){
@@ -13,19 +13,19 @@ public class HappyNumber {
             return false;
         }
     }
-    static int check(int hap){
-        if (hap == 1 || hap ==7){
+    static int check(int beu){
+        if (beu == 1 || beu ==7){
             return 1;
         }
-        if (hap<10){
+        if (beu<10){
             return -1;
         }
         int sum = 0;
         int rem =0;
-        while(hap>0){
-            rem = hap%10;
+        while(beu>0){
+            rem = beu%10;
             sum= rem * rem +sum;
-            hap=hap/10;
+            beu=beu/10;
         }
 
         return check(sum);
