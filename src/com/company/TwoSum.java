@@ -1,70 +1,45 @@
 package com.company;
-// Not Solved, we have to use hash map
-// solution is wrong because binary search take sorted array, and we are not able to provide it.
 import java.util.Arrays;
 
 public class TwoSum {
     public static void main(String[] args) {
-        int[] arr = {3,2,4,7,8,8,6};
-        System.out.println(Arrays.toString(twoSum(arr,6)));
+        int[] nums = {-1,-2,-3,-4,-5};
+        System.out.println(Arrays.toString(twoSum(nums, -8)));
     }
-    static void swap(int[] arr,int first,int second){
-        int temp = arr[first];
-        arr[first]=arr[second];
-        arr[second]=temp;
-    }
-
-    private static void insertionSort(int[] arr) {
-        for (int i = 0; i < arr.length-1; i++) {
-            for (int j = i+1; j >0; j--) {
-                if (arr[j]<arr[j-1]){
-                    swap(arr,j,j-1);
-                }else {
-                    break;
-                }
-            }
-        }
-    }
-    static int binarySearch(int[] arr, int target) {
-        int start=0;
-        int end=arr.length-1;
-        while (start<=end){
-            int mid= start +(end-start)/2;
-            if (target<arr[mid]){
-                end=mid-1;
-            }else if (target>arr[mid]){
-                start=mid+1;
-            }else return mid;
-
-
-        }
-        return -1;
-    }
-    private static int[] twoSum(int[] arr,int target) {
-        int n =arr.length;
-        if (n==2){
-            return new int[] {0,1};
-        }
-        int l=0;
-        int r=n-1;
-        int[] clonearr = arr.clone();
-        insertionSort(arr);
+    public static int[] twoSum(int[] arr,int target) {
         int[] ans = new int[2];
-        while (l<r){
-            if (arr[l]+arr[r]<target){
-                l++;
+        int left = 0;
+        int right = arr.length-1;
+        int[] clonearr = arr.clone();
+        Arrays.sort(arr);
+        while (left<right){
+            if (arr[left]+arr[right]==target){
+                ans = new int[]{arr[left], arr[right]};
             }
-            else if (arr[l]+arr[r]>target){
+            if (arr[left]+arr[right]>target){
+                right--;
+            }else {
+                left++;
+            }
+        }
+        int l = 0;
+        int r = arr.length-1;
+        while (true){
+            if (clonearr[l]!=ans[0] && clonearr[r]!=ans[1]){
+                l++;
                 r--;
             }
+            else if (clonearr[l]==ans[0] && clonearr[r]!=ans[1]){
+                r--;
+            }
+            else if (clonearr[l]!=ans[0] && clonearr[r]==ans[1]){
+                l++;
+            }
             else {
-                int p,q;
-                p=binarySearch(clonearr,arr[l]);
-                q=binarySearch(clonearr,arr[r]);
-                ans = new int[]{p, q};
                 break;
             }
+
         }
-        return ans;
+        return new int[] {l,r};
     }
 }
